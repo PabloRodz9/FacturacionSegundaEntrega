@@ -1,0 +1,30 @@
+DROP TABLE SALES IF EXISTS;
+DROP TABLE PRODUCTS IF EXISTS;
+DROP TABLE CLIENTS IF EXISTS;
+
+
+CREATE TABLE clients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(75) NOT NULL,
+    last_name VARCHAR(75) NOT NULL,
+    doc_number VARCHAR(8) NOT NULL
+);
+
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(150) NOT NULL,
+    code VARCHAR(50) NOT NULL,
+    stock INT NOT NULL,
+    price DOUBLE NOT NULL
+);
+
+CREATE TABLE sales (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    sale_date DATE NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
