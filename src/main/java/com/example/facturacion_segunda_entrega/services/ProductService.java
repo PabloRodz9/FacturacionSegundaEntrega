@@ -14,6 +14,11 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public Product getProductById(int id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }

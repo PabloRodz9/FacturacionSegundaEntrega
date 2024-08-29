@@ -33,6 +33,14 @@ public class Product {
 
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id && stock == product.stock && Double.compare(price, product.price) == 0 && Objects.equals(description, product.description) && Objects.equals(code, product.code) && Objects.equals(sales, product.sales);
+    }
+
+    @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
@@ -42,14 +50,6 @@ public class Product {
                 ", price=" + price +
                 ", sales=" + sales +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id && stock == product.stock && Double.compare(price, product.price) == 0 && Objects.equals(description, product.description) && Objects.equals(code, product.code) && Objects.equals(sales, product.sales);
     }
 
     @Override

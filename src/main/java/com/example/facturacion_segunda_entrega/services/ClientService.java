@@ -15,6 +15,10 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
+    public Client getClientById(int id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client not found with id " + id));
+    }
     public List<Client> getAllClients() {
         return clientRepository.findAll();
     }

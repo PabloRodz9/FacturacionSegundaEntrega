@@ -1,5 +1,6 @@
 package com.example.facturacion_segunda_entrega.controllers;
 
+import com.example.facturacion_segunda_entrega.DTO.ProductDTO;
 import com.example.facturacion_segunda_entrega.entities.Product;
 import com.example.facturacion_segunda_entrega.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,12 @@ public class ProductController {
 
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Map<String, Object>> saveClient(@RequestBody Product product) {
+    public ResponseEntity<Map<String, Object>> saveClient(@RequestBody ProductDTO productDTO) {
+        Product product = new Product();
+        product.setCode(productDTO.getCode());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setStock(productDTO.getStock());
         Product savedProduct = productService.saveProduct(product);
         Map<String, Object> response = new HashMap<>();
         response.put("message", "The product has been successfully saved");

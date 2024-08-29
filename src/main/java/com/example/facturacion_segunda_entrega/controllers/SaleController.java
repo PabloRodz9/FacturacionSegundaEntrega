@@ -1,6 +1,9 @@
 package com.example.facturacion_segunda_entrega.controllers;
 
+import com.example.facturacion_segunda_entrega.DTO.SaleDTO;
 import com.example.facturacion_segunda_entrega.entities.Sale;
+import com.example.facturacion_segunda_entrega.services.ClientService;
+import com.example.facturacion_segunda_entrega.services.ProductService;
 import com.example.facturacion_segunda_entrega.services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,30 +20,40 @@ public class SaleController {
     @Autowired
     private SaleService saleService;
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<Map<String, Object>> getAllClients() {
-        List<Sale> sales = saleService.getAllSales();
+    @Autowired
+    private ClientService clientService;
 
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("message", "Sales:");
-        response.put("data", sales);
+    @Autowired
+    private ProductService productService;
 
-        return ResponseEntity
-                .ok()
-                .body(response);
-    }
+        @GetMapping(produces = "application/json")
+        public ResponseEntity<Map<String, Object>> getAllSales() {
+            List<Sale> sales = saleService.getAllSales();
 
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("message", "Sales:");
+            response.put("data", sales);
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Map<String, Object>> saveSale(@RequestBody Sale sale) {
-        Sale savedSaled = saleService.saveSale(sale);
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "The sale has been successfully saved");
-        response.put("data", savedSaled);
+            return ResponseEntity
+                    .ok()
+                    .body(response);
+        }
 
-        return ResponseEntity.
-                ok().
-                body(response);
-    }
+        @PostMapping(consumes = "application/json", produces = "application/json")
+        public ResponseEntity<Map<String, Object>> saveSale(@RequestBody SaleDTO saleDTO) {
+            Sale sale = new Sale();
+            sale.setClient(clientService.getClientById(saleDTO.getClientId()));
+            sale.setProduct(productService.getProductById(saleDTO.getProductId()));
+            sale.setSaleDate(saleDTO.getSaleDate());
+            sale.setQuantity(saleDTO.getQuantity());
+            Sale savedSale = saleService.saveSale(sale);
 
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "The sale has been successfully saved");
+            response.put("data", savedSale);
+
+            return ResponseEntity
+                    .ok()
+                    .body(response);
+        }
 }

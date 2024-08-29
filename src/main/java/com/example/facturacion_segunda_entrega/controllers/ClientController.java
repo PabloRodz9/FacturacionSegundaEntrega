@@ -1,5 +1,6 @@
 package com.example.facturacion_segunda_entrega.controllers;
 
+import com.example.facturacion_segunda_entrega.DTO.ClientDTO;
 import com.example.facturacion_segunda_entrega.entities.Client;
 import com.example.facturacion_segunda_entrega.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,11 @@ public class ClientController {
 
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Map<String, Object>> saveClient(@RequestBody Client client) {
+    public ResponseEntity<Map<String, Object>> saveClient(@RequestBody ClientDTO clientDTO) {
+        Client client = new Client();
+        client.setName(clientDTO.getName());
+        client.setDocNumber(clientDTO.getDocNumber());
+        client.setLastName(clientDTO.getLastName());
         Client savedClient = clientService.saveClient(client);
         Map<String, Object> response = new HashMap<>();
         response.put("message", "The client has been successfully saved");
