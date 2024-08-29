@@ -1,7 +1,6 @@
 package com.example.facturacion_segunda_entrega.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,13 +15,14 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonIgnore
+    @JsonManagedReference
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonManagedReference
     private Product product;
 
     @Column(name = "quantity", nullable = false)
@@ -31,7 +31,6 @@ public class Sale {
     @Column(name = "sale_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date saleDate;
-
 
     @Override
     public boolean equals(Object o) {

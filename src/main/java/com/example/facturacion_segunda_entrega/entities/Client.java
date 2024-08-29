@@ -1,9 +1,7 @@
 package com.example.facturacion_segunda_entrega.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +24,7 @@ public class Client {
     private String docNumber;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Sale> sales;
 
     @Override
