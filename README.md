@@ -49,13 +49,13 @@ H2 Database.
 ## Arquitectura
 ### El sistema está basado en una arquitectura de tres capas:
 
-Capa de Controlador: Expone los endpoints RESTful que permiten interactuar con la API. Cada entidad tiene su propio controlador con métodos para obtener todos los registros (GET), obtener por ID (GET), crear (POST) y eliminar (DELETE).
+Capa de Controlador: Expone los endpoints RESTful que permiten interactuar con el web service. Cada entidad tiene su propio controlador con métodos para obtener todos los registros (GET), obtener por ID (GET), crear (POST) y eliminar (DELETE).
 
 Capa de Servicio: Sirve de intermediario entre los controladores y el repositorio.
 
 Capa de Repositorio: Se encarga de la persistencia y recuperación de datos utilizando JPA/Hibernate.
 
-DTO (Data Transfer Object): Utilizados para manejar la transferencia de datos entre el frontend y la API, optimizando el manejo de la información.
+(Adicionalmente, utilicé DTO (Data Transfer Object) para manejar la transferencia de datos entre el frontend y la API, optimizando el manejo de la información.)
 
 ## Entidades
 ### Client (Cliente)
