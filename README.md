@@ -30,8 +30,8 @@ name (String): Nombre del cliente.
 lastName (String): Apellido del cliente.
 docNumber (String): Número de documento del cliente.
 sales (List<Sale>): Lista de ventas asociadas al cliente.
-Relaciones:
 
+Relaciones:
 Uno a muchos con Sale.
 
 ### Product (Producto)
@@ -45,9 +45,10 @@ code (String): Código único del producto.
 stock (int): Cantidad de unidades disponibles.
 price (double): Precio del producto.
 sales (List<Sale>): Lista de ventas asociadas al producto.
-Relaciones:
 
+Relaciones:
 Uno a muchos con Sale.
+
 ### Sale (Venta)
 Representa una transacción de venta en el sistema.
 
@@ -58,8 +59,8 @@ client (Client): Cliente que realizó la compra.
 product (Product): Producto vendido.
 quantity (int): Cantidad del producto vendido.
 saleDate (Date): Fecha en la que se realizó la venta.
-Relaciones:
 
+Relaciones:
 Muchos a uno con Client y Product.
 
 ## Endpoints
