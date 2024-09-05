@@ -78,3 +78,5 @@ Configurar la base de datos en el archivo application.properties (por defecto, e
 Iniciar la aplicación.
 Documentación de la API
 La API está documentada mediante Swagger. Para acceder a la documentación interactiva, inicie la aplicación y visite la siguiente URL: http://localhost:8080/swagger-ui/index.html
+
+Para visualizar la base de datos ingresar a http://localhost:8080/h2-console/login.jsp?jsessionid=2d6dce7db7b10ab613b2f1ff7cde8f20
