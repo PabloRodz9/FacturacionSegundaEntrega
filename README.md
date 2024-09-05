@@ -1,4 +1,5 @@
-**Sistema de Facturación**
+#Sistema de Facturación
+
 Este proyecto es un sistema de facturación basado en una arquitectura de tres capas, con soporte para operaciones CRUD en todas las entidades principales: Client, Product y Sale. Además, se utiliza DTO para la transferencia de datos y está documentado mediante Swagger/OpenAPI.
 
 Tecnologías utilizadas
