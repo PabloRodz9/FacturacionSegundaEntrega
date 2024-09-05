@@ -6,7 +6,7 @@ Este proyecto es un sistema de facturación basado en una arquitectura de tres c
 Spring Boot - Framework para la creación de aplicaciones Java.
 Hibernate - Implementación JPA para la persistencia de datos.
 Swagger / Springdoc OpenAPI - Para la generación de la documentación de la API.
-H2 Database (o cualquier otra base de datos soportada por JPA).
+H2 Database.
 Arquitectura
 ### El sistema está basado en una arquitectura de tres capas:
 
