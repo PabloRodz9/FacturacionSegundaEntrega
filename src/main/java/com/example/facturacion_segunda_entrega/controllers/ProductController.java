@@ -13,6 +13,7 @@ import java.util.Map;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import javax.persistence.EntityNotFoundException;
 
 @Tag(name = "Products", description = "Endpoints for managing products")
 @RestController
@@ -25,13 +26,11 @@ public class ProductController {
     @Operation(summary = "Retrieve all products", description = "Fetches a list of all products")
     @ApiResponse(responseCode = "200", description = "List of products successfully retrieved")
     @GetMapping(produces = "application/json")
-    public ResponseEntity<Map<String, Object>> getAllClients() {
+    public ResponseEntity<Map<String, Object>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
-
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("message", "Products:");
         response.put("data", products);
-
         return ResponseEntity.ok().body(response);
     }
 
@@ -40,52 +39,33 @@ public class ProductController {
     @ApiResponse(responseCode = "404", description = "Product not found")
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Map<String, Object>> getProductById(@PathVariable int id) {
-        Product product = productService.getProductById(id);
-
         Map<String, Object> response = new HashMap<>();
-        if (product != null) {
+        try {
+            Product product = productService.getProductById(id);
             response.put("message", "Product found");
             response.put("data", product);
             return ResponseEntity.ok().body(response);
-        } else {
-            response.put("message", "Product not found");
+        } catch (EntityNotFoundException e) {
+            response.put("message", e.getMessage());
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @Operation(summary = "Save a new product", description = "Saves a new product with the provided data")
     @ApiResponse(responseCode = "200", description = "Product successfully saved")
+    @ApiResponse(responseCode = "400", description = "Invalid input data")
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Map<String, Object>> saveClient(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Map<String, Object>> saveProduct(@RequestBody ProductDTO productDTO) {
         Map<String, Object> response = new HashMap<>();
-
-        if (productDTO.getDescription() == null || productDTO.getDescription().isEmpty()) {
-            response.put("error", "The description cannot be null or empty.");
+        try {
+            Product savedProduct = productService.saveProduct(productDTO);
+            response.put("message", "Product successfully saved");
+            response.put("data", savedProduct);
+            return ResponseEntity.ok().body(response);
+        } catch (IllegalArgumentException e) {
+            response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
-
-        if (productDTO.getPrice() == null || productDTO.getPrice() < 0) {
-            response.put("error", "The price cannot be null or negative.");
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        if (productDTO.getStock() == null || productDTO.getStock() < 0) {
-            response.put("error", "The stock cannot be null or negative.");
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        Product product = new Product();
-
-        product.setCode(productDTO.getCode());
-        product.setDescription(productDTO.getDescription());
-        product.setPrice(productDTO.getPrice());
-        product.setStock(productDTO.getStock());
-        Product savedProduct = productService.saveProduct(product);
-
-        response.put("message", "The product has been successfully saved");
-        response.put("data", product);
-
-        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Delete a product", description = "Deletes a product by ID")
@@ -93,18 +73,16 @@ public class ProductController {
     @ApiResponse(responseCode = "404", description = "Product not found")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> deleteProduct(@PathVariable int id) {
-        boolean isDeleted = productService.deleteProduct(id);
-
         Map<String, Object> response = new HashMap<>();
-        if (isDeleted) {
+        try {
+            productService.deleteProduct(id);
             response.put("message", "Product successfully deleted");
             return ResponseEntity.ok().body(response);
-        } else {
-            response.put("message", "Product not found");
+        } catch (EntityNotFoundException e) {
+            response.put("message", e.getMessage());
             return ResponseEntity.status(404).body(response);
         }
     }
-
 }
 
 

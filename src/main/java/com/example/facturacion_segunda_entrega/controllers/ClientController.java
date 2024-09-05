@@ -13,6 +13,8 @@ import java.util.Map;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import javax.persistence.EntityNotFoundException;
+
 
 @Tag(name = "Clients", description = "Endpoints for managing clients")
 @RestController
@@ -27,14 +29,10 @@ public class ClientController {
     @GetMapping(produces = "application/json")
     public ResponseEntity<Map<String, Object>> getAllClients() {
         List<Client> clients = clientService.getAllClients();
-
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("message", "Clients:");
         response.put("data", clients);
-
-        return ResponseEntity
-                .ok()
-                .body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Retrieve a client by ID", description = "Fetches a client by the provided ID")
@@ -42,62 +40,49 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client not found")
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Map<String, Object>> getClientById(@PathVariable int id) {
-        Client client = clientService.getClientById(id);
-
         Map<String, Object> response = new HashMap<>();
-        if (client != null) {
+        try {
+            Client client = clientService.getClientById(id);
             response.put("message", "Client found");
             response.put("data", client);
             return ResponseEntity.ok().body(response);
-        } else {
-            response.put("message", "Client not found");
+        } catch (EntityNotFoundException e) {
+            response.put("message", e.getMessage());
             return ResponseEntity.status(404).body(response);
         }
     }
 
     @Operation(summary = "Save a new client", description = "Saves a new client with the provided data")
     @ApiResponse(responseCode = "200", description = "Client successfully saved")
+    @ApiResponse(responseCode = "400", description = "Invalid input data")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Map<String, Object>> saveClient(@RequestBody ClientDTO clientDTO) {
         Map<String, Object> response = new HashMap<>();
-
-        if (clientDTO.getName() == null || clientDTO.getName().isEmpty()) {
-            response.put("error", "The name cannot be null or empty.");
+        try {
+            Client savedClient = clientService.saveClient(clientDTO);
+            response.put("message", "Client successfully saved");
+            response.put("data", savedClient);
+            return ResponseEntity.ok().body(response);
+        } catch (IllegalArgumentException e) {
+            response.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
-
-        if (clientDTO.getLastName() == null || clientDTO.getLastName().isEmpty()) {
-            response.put("error", "The last name cannot be null or empty.");
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        Client client = new Client();
-        client.setName(clientDTO.getName());
-        client.setDocNumber(clientDTO.getDocNumber());
-        client.setLastName(clientDTO.getLastName());
-        Client savedClient = clientService.saveClient(client);
-
-        response.put("message", "The client has been successfully saved");
-        response.put("data", savedClient);
-
-        return ResponseEntity.ok().body(response);
     }
-
 
     @Operation(summary = "Delete a client", description = "Deletes a client by ID")
     @ApiResponse(responseCode = "200", description = "Client successfully deleted")
     @ApiResponse(responseCode = "404", description = "Client not found")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> deleteClient(@PathVariable int id) {
-        boolean isDeleted = clientService.deleteClient(id);
-
         Map<String, Object> response = new HashMap<>();
-        if (isDeleted) {
+        try {
+            clientService.deleteClient(id);
             response.put("message", "Client successfully deleted");
             return ResponseEntity.ok().body(response);
-        } else {
-            response.put("message", "Client not found");
+        } catch (EntityNotFoundException e) {
+            response.put("message", e.getMessage());
             return ResponseEntity.status(404).body(response);
         }
     }
 }
+
