@@ -51,7 +51,7 @@ H2 Database.
 
 Capa de Controlador: Expone los endpoints RESTful que permiten interactuar con el web service. Cada entidad tiene su propio controlador con métodos para obtener todos los registros (GET), obtener por ID (GET), crear (POST) y eliminar (DELETE).
 
-Capa de Servicio: Sirve de intermediario entre los controladores y el repositorio.
+Capa de Servicio: Sirve de intermediario entre los controladores y el repositorio. Contiene la lógica de negocio.
 
 Capa de Repositorio: Se encarga de la persistencia y recuperación de datos utilizando JPA/Hibernate.
 
