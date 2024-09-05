@@ -80,4 +80,4 @@ DELETE /clients/{id}: Eliminar un cliente y todas sus ventas asociadas.
 
 La API está documentada mediante Swagger. Para acceder a la documentación interactiva, inicie la aplicación y visite la siguiente URL: http://localhost:8080/swagger-ui/index.html
 
-Para visualizar la base de datos ingresar a http://localhost:8080/h2-console/login.jsp?jsessionid=2d6dce7db7b10ab613b2f1ff7cde8f20
+Para visualizar la base de datos ingresar a http://localhost:8080/h2-console/login.jsp?jsessionid=2d6dce7db7b10ab613b2f1ff7cde8f20 (En application.properties están las credenciales)
