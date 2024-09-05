@@ -1,6 +1,8 @@
 package com.example.facturacion_segunda_entrega.controllers;
 
 import com.example.facturacion_segunda_entrega.DTO.SaleDTO;
+import com.example.facturacion_segunda_entrega.entities.Client;
+import com.example.facturacion_segunda_entrega.entities.Product;
 import com.example.facturacion_segunda_entrega.entities.Sale;
 import com.example.facturacion_segunda_entrega.services.ClientService;
 import com.example.facturacion_segunda_entrega.services.ProductService;
@@ -66,20 +68,32 @@ public class SaleController {
     @ApiResponse(responseCode = "200", description = "Sale successfully saved")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Map<String, Object>> saveSale(@RequestBody SaleDTO saleDTO) {
+        Map<String, Object> response = new HashMap<>();
+        Client client = clientService.getClientById(saleDTO.getClientId());
+        if (client == null) {
+            response.put("message", "Client not found with id " + saleDTO.getClientId());
+            return ResponseEntity.status(404).body(response);
+        }
+
+        Product product = productService.getProductById(saleDTO.getProductId());
+        if (product == null) {
+            response.put("message", "Product not found with id " + saleDTO.getProductId());
+            return ResponseEntity.status(404).body(response);
+        }
+
         Sale sale = new Sale();
-        sale.setClient(clientService.getClientById(saleDTO.getClientId()));
-        sale.setProduct(productService.getProductById(saleDTO.getProductId()));
+        sale.setClient(client);
+        sale.setProduct(product);
         sale.setSaleDate(saleDTO.getSaleDate());
         sale.setQuantity(saleDTO.getQuantity());
+
         Sale savedSale = saleService.saveSale(sale);
 
-        Map<String, Object> response = new HashMap<>();
         response.put("message", "The sale has been successfully saved");
         response.put("data", savedSale);
 
         return ResponseEntity.ok().body(response);
     }
-
     @Operation(summary = "Delete a sale", description = "Deletes a sale by ID")
     @ApiResponse(responseCode = "200", description = "Sale successfully deleted")
     @ApiResponse(responseCode = "404", description = "Sale not found")
