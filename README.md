@@ -4,9 +4,13 @@ Este proyecto es un sistema de facturación basado en una arquitectura de tres c
 
 ## Funcionalidad esperada
 
-Al eliminar un cliente se eliminan sus ventas asociadas
+Al eliminar un cliente se eliminan sus ventas asociadas.
+
 Al eliminar un producto se eliminan sus ventas asociadas.
+
 Al eliminar una venta solo se elimina la venta.
+
+Luego todos los save/gets funcionan del mismo modo, guardar, buscar todos o buscar por ID.
 
 ## Tecnologías utilizadas
 Spring Boot - Framework para la creación de aplicaciones Java.
