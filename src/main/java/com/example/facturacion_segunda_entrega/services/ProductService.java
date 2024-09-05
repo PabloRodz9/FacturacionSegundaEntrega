@@ -16,7 +16,7 @@ public class ProductService {
 
     public Product getProductById(int id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+                .orElse(null);
     }
 
     public List<Product> getAllProducts() {

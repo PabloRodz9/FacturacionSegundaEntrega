@@ -22,12 +22,10 @@ public class SaleService {
 
     public Sale getSaleById(int id) {
         return saleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sale not found with id " + id));
+                .orElse(null);
     }
     public boolean deleteSale(int id) {
-        System.out.println(id);
         if (saleRepository.existsById(id)) {
-            System.out.println("exist");
             saleRepository.deleteById(id);
             return true;
         } else {
