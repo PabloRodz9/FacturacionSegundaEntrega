@@ -19,4 +19,14 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
+
+    public boolean deleteSale(int id) {
+        if (saleRepository.existsById(id)) {
+            saleRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

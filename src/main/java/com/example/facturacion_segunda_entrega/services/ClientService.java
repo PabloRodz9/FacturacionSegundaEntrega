@@ -23,4 +23,14 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    public boolean deleteClient(int id) {
+        if (clientRepository.existsById(id)) {
+            clientRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

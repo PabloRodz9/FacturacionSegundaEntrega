@@ -6,24 +6,32 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+
+@Schema(description = "Entity representing a product in the system")
 @Entity
 @Table(name = "products")
 public class Product {
 
+    @Schema(description = "Unique identifier of the product", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Schema(description = "Description of the product", example = "Laptop", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "description", nullable = false, length = 150)
     private String description;
 
+    @Schema(description = "Unique code of the product", example = "PROD123", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "code", nullable = false, length = 50)
     private String code;
 
+    @Schema(description = "Available stock of the product", example = "50", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "stock", nullable = false)
     private int stock;
 
+    @Schema(description = "Price of the product", example = "199.99", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "price", nullable = false)
     private double price;
 

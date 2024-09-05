@@ -13,6 +13,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
+@Tag(name = "Sales", description = "Endpoints for managing sales")
 @RestController
 @RequestMapping("/sales")
 public class SaleController {
@@ -26,34 +31,52 @@ public class SaleController {
     @Autowired
     private ProductService productService;
 
-        @GetMapping(produces = "application/json")
-        public ResponseEntity<Map<String, Object>> getAllSales() {
-            List<Sale> sales = saleService.getAllSales();
+    @Operation(summary = "Retrieve all sales", description = "Fetches a list of all sales")
+    @ApiResponse(responseCode = "200", description = "List of sales successfully retrieved")
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getAllSales() {
+        List<Sale> sales = saleService.getAllSales();
 
-            Map<String, Object> response = new LinkedHashMap<>();
-            response.put("message", "Sales:");
-            response.put("data", sales);
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Sales:");
+        response.put("data", sales);
 
-            return ResponseEntity
-                    .ok()
-                    .body(response);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @Operation(summary = "Save a new sale", description = "Saves a new sale with the provided data")
+    @ApiResponse(responseCode = "200", description = "Sale successfully saved")
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> saveSale(@RequestBody SaleDTO saleDTO) {
+        Sale sale = new Sale();
+        sale.setClient(clientService.getClientById(saleDTO.getClientId()));
+        sale.setProduct(productService.getProductById(saleDTO.getProductId()));
+        sale.setSaleDate(saleDTO.getSaleDate());
+        sale.setQuantity(saleDTO.getQuantity());
+        Sale savedSale = saleService.saveSale(sale);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "The sale has been successfully saved");
+        response.put("data", savedSale);
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @Operation(summary = "Delete a sale", description = "Deletes a sale by ID")
+    @ApiResponse(responseCode = "200", description = "Sale successfully deleted")
+    @ApiResponse(responseCode = "404", description = "Sale not found")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> deleteSale(@PathVariable int id) {
+        boolean isDeleted = saleService.deleteSale(id);
+
+        Map<String, Object> response = new HashMap<>();
+        if (isDeleted) {
+            response.put("message", "Sale successfully deleted");
+            return ResponseEntity.ok().body(response);
+        } else {
+            response.put("message", "Sale not found");
+            return ResponseEntity.status(404).body(response);
         }
+    }
 
-        @PostMapping(consumes = "application/json", produces = "application/json")
-        public ResponseEntity<Map<String, Object>> saveSale(@RequestBody SaleDTO saleDTO) {
-            Sale sale = new Sale();
-            sale.setClient(clientService.getClientById(saleDTO.getClientId()));
-            sale.setProduct(productService.getProductById(saleDTO.getProductId()));
-            sale.setSaleDate(saleDTO.getSaleDate());
-            sale.setQuantity(saleDTO.getQuantity());
-            Sale savedSale = saleService.saveSale(sale);
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "The sale has been successfully saved");
-            response.put("data", savedSale);
-
-            return ResponseEntity
-                    .ok()
-                    .body(response);
-        }
 }

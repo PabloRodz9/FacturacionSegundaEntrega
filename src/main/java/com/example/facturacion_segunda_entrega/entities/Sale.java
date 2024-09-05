@@ -1,33 +1,37 @@
 package com.example.facturacion_segunda_entrega.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-
+@Schema(description = "Entity representing a sale transaction in the system")
 @Entity
 @Table(name = "sales")
 public class Sale {
 
+    @Schema(description = "Unique identifier of the sale", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Schema(description = "Client associated with the sale", requiredMode = Schema.RequiredMode.REQUIRED)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonManagedReference
     private Client client;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Schema(description = "Product associated with the sale", requiredMode = Schema.RequiredMode.REQUIRED)
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonManagedReference
     private Product product;
 
+    @Schema(description = "Quantity of the product sold", example = "5",requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    @Schema(description = "Date of the sale", example = "2023-08-15", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "sale_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date saleDate;

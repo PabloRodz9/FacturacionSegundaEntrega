@@ -23,4 +23,14 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public boolean deleteProduct(int id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

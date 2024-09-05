@@ -5,21 +5,27 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Entity representing a client in the system")
 @Entity
 @Table(name = "clients")
 public class Client {
 
+    @Schema(description = "Unique identifier of the client", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Schema(description = "Client's first name", example = "John", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "name", nullable = false, length = 75)
     private String name;
 
+    @Schema(description = "Client's last name", example = "Doe", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "last_name", nullable = false, length = 75)
     private String lastName;
 
+    @Schema(description = "Client's document number", example = "12345678", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name = "doc_number", nullable = false, length = 8)
     private String docNumber;
 
