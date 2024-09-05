@@ -35,7 +35,7 @@ public class Product {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Sale> sales;
 

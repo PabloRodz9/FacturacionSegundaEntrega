@@ -25,7 +25,9 @@ public class SaleService {
                 .orElseThrow(() -> new RuntimeException("Sale not found with id " + id));
     }
     public boolean deleteSale(int id) {
+        System.out.println(id);
         if (saleRepository.existsById(id)) {
+            System.out.println("exist");
             saleRepository.deleteById(id);
             return true;
         } else {

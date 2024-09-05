@@ -17,12 +17,12 @@ public class Sale {
     private int id;
 
     @Schema(description = "Client associated with the sale", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @Schema(description = "Product associated with the sale", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ManyToOne(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
