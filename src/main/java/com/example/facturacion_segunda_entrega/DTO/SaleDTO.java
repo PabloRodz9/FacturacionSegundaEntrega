@@ -33,7 +33,7 @@ public class SaleDTO {
                 '}';
     }
 
-    // Getters y Setters
+    // Getters and Setters
 
     public int getClientId() {
         return clientId;

@@ -8,8 +8,8 @@ public class ProductDTO {
     private int id;
     private String description;
     private String code;
-    private int stock;
-    private double price;
+    private Integer stock;
+    private Double price;
 
     @Override
     public boolean equals(Object o) {
@@ -61,19 +61,19 @@ public class ProductDTO {
         this.code = code;
     }
 
-    public int getStock() {
+    public Integer  getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer  stock) {
         this.stock = stock;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

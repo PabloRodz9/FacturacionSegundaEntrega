@@ -81,6 +81,11 @@ public class SaleController {
             return ResponseEntity.status(404).body(response);
         }
 
+        if(saleDTO.getQuantity() == null || saleDTO.getQuantity() < 1){
+            response.put("error", "The quantity cannot be null or negative.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         Sale sale = new Sale();
         sale.setClient(client);
         sale.setProduct(product);
@@ -94,6 +99,7 @@ public class SaleController {
 
         return ResponseEntity.ok().body(response);
     }
+
     @Operation(summary = "Delete a sale", description = "Deletes a sale by ID")
     @ApiResponse(responseCode = "200", description = "Sale successfully deleted")
     @ApiResponse(responseCode = "404", description = "Sale not found")

@@ -57,14 +57,31 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Product successfully saved")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Map<String, Object>> saveClient(@RequestBody ProductDTO productDTO) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (productDTO.getDescription() == null || productDTO.getDescription().isEmpty()) {
+            response.put("error", "The description cannot be null or empty.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        if (productDTO.getPrice() == null || productDTO.getPrice() < 0) {
+            response.put("error", "The price cannot be null or negative.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        if (productDTO.getStock() == null || productDTO.getStock() < 0) {
+            response.put("error", "The stock cannot be null or negative.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         Product product = new Product();
+
         product.setCode(productDTO.getCode());
         product.setDescription(productDTO.getDescription());
         product.setPrice(productDTO.getPrice());
         product.setStock(productDTO.getStock());
         Product savedProduct = productService.saveProduct(product);
 
-        Map<String, Object> response = new HashMap<>();
         response.put("message", "The product has been successfully saved");
         response.put("data", product);
 

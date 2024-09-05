@@ -59,13 +59,24 @@ public class ClientController {
     @ApiResponse(responseCode = "200", description = "Client successfully saved")
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<Map<String, Object>> saveClient(@RequestBody ClientDTO clientDTO) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (clientDTO.getName() == null || clientDTO.getName().isEmpty()) {
+            response.put("error", "The name cannot be null or empty.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        if (clientDTO.getLastName() == null || clientDTO.getLastName().isEmpty()) {
+            response.put("error", "The last name cannot be null or empty.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         Client client = new Client();
         client.setName(clientDTO.getName());
         client.setDocNumber(clientDTO.getDocNumber());
         client.setLastName(clientDTO.getLastName());
         Client savedClient = clientService.saveClient(client);
 
-        Map<String, Object> response = new HashMap<>();
         response.put("message", "The client has been successfully saved");
         response.put("data", savedClient);
 
