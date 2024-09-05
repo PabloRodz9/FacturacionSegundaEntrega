@@ -1,4 +1,5 @@
 package com.example.facturacion_segunda_entrega.services;
+import com.example.facturacion_segunda_entrega.entities.Client;
 import com.example.facturacion_segunda_entrega.entities.Product;
 import com.example.facturacion_segunda_entrega.entities.Sale;
 import com.example.facturacion_segunda_entrega.repositories.SaleRepository;
@@ -19,7 +20,10 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
-
+    public Sale getSaleById(int id) {
+        return saleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sale not found with id " + id));
+    }
     public boolean deleteSale(int id) {
         if (saleRepository.existsById(id)) {
             saleRepository.deleteById(id);

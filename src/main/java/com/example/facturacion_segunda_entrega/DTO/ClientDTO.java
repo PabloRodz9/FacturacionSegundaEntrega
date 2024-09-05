@@ -10,16 +10,6 @@ public class ClientDTO {
     private String docNumber;
 
     @Override
-    public String toString() {
-        return "ClientDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", docNumber='" + docNumber + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -30,6 +20,16 @@ public class ClientDTO {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, lastName, docNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "ClientDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", docNumber='" + docNumber + '\'' +
+                '}';
     }
 
 // Getters and Setters

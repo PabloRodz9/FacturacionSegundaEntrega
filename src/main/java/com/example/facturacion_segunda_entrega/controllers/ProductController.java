@@ -35,6 +35,24 @@ public class ProductController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Retrieve a product by ID", description = "Fetches a product by the provided ID")
+    @ApiResponse(responseCode = "200", description = "Product successfully retrieved")
+    @ApiResponse(responseCode = "404", description = "Product not found")
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getProductById(@PathVariable int id) {
+        Product product = productService.getProductById(id);
+
+        Map<String, Object> response = new HashMap<>();
+        if (product != null) {
+            response.put("message", "Product found");
+            response.put("data", product);
+            return ResponseEntity.ok().body(response);
+        } else {
+            response.put("message", "Product not found");
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+
     @Operation(summary = "Save a new product", description = "Saves a new product with the provided data")
     @ApiResponse(responseCode = "200", description = "Product successfully saved")
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -52,7 +70,6 @@ public class ProductController {
 
         return ResponseEntity.ok().body(response);
     }
-
 
     @Operation(summary = "Delete a product", description = "Deletes a product by ID")
     @ApiResponse(responseCode = "200", description = "Product successfully deleted")

@@ -12,17 +12,6 @@ public class ProductDTO {
     private double price;
 
     @Override
-    public String toString() {
-        return "ProductDTO{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", code='" + code + '\'' +
-                ", stock=" + stock +
-                ", price=" + price +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -34,6 +23,18 @@ public class ProductDTO {
     public int hashCode() {
         return Objects.hash(id, description, code, stock, price);
     }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", code='" + code + '\'' +
+                ", stock=" + stock +
+                ", price=" + price +
+                '}';
+    }
+
 // Getters and Setters
 
     public int getId() {

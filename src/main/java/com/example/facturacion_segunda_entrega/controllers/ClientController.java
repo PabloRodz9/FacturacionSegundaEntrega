@@ -37,6 +37,24 @@ public class ClientController {
                 .body(response);
     }
 
+    @Operation(summary = "Retrieve a client by ID", description = "Fetches a client by the provided ID")
+    @ApiResponse(responseCode = "200", description = "Client successfully retrieved")
+    @ApiResponse(responseCode = "404", description = "Client not found")
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getClientById(@PathVariable int id) {
+        Client client = clientService.getClientById(id);
+
+        Map<String, Object> response = new HashMap<>();
+        if (client != null) {
+            response.put("message", "Client found");
+            response.put("data", client);
+            return ResponseEntity.ok().body(response);
+        } else {
+            response.put("message", "Client not found");
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+
     @Operation(summary = "Save a new client", description = "Saves a new client with the provided data")
     @ApiResponse(responseCode = "200", description = "Client successfully saved")
     @PostMapping(consumes = "application/json", produces = "application/json")

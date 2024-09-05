@@ -9,17 +9,6 @@ public class SaleDTO {
     private Integer quantity;
     private Date saleDate;
 
-
-    @Override
-    public String toString() {
-        return "SaleDTO{" +
-                "clientId=" + clientId +
-                ", productId=" + productId +
-                ", quantity=" + quantity +
-                ", saleDate=" + saleDate +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,6 +22,16 @@ public class SaleDTO {
         return Objects.hash(clientId, productId, quantity, saleDate);
     }
 
+
+    @Override
+    public String toString() {
+        return "SaleDTO{" +
+                "clientId=" + clientId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", saleDate=" + saleDate +
+                '}';
+    }
 
     // Getters y Setters
 

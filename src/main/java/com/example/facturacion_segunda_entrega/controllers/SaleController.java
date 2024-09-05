@@ -44,6 +44,24 @@ public class SaleController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Retrieve a sale by ID", description = "Fetches a sale by the provided ID")
+    @ApiResponse(responseCode = "200", description = "Sale successfully retrieved")
+    @ApiResponse(responseCode = "404", description = "Sale not found")
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getSaleById(@PathVariable int id) {
+        Sale sale = saleService.getSaleById(id);
+
+        Map<String, Object> response = new HashMap<>();
+        if (sale != null) {
+            response.put("message", "Sale found");
+            response.put("data", sale);
+            return ResponseEntity.ok().body(response);
+        } else {
+            response.put("message", "Sale not found");
+            return ResponseEntity.status(404).body(response);
+        }
+    }
+
     @Operation(summary = "Save a new sale", description = "Saves a new sale with the provided data")
     @ApiResponse(responseCode = "200", description = "Sale successfully saved")
     @PostMapping(consumes = "application/json", produces = "application/json")

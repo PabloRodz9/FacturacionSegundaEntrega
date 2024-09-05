@@ -49,6 +49,11 @@ public class Product {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(id, description, code, stock, price, sales);
+    }
+
+    @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
@@ -58,11 +63,6 @@ public class Product {
                 ", price=" + price +
                 ", sales=" + sales +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, code, stock, price, sales);
     }
 
     // Getters and Setters
