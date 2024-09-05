@@ -12,6 +12,34 @@ Al eliminar una venta solo se elimina la venta.
 
 Luego todos los GET/POST funcionan del mismo modo, guardar, buscar todos o buscar por ID.
 
+### Ejemplos POST
+Post /clients
+{
+  "name": "John",
+  "lastName": "Doe",
+  "docNumber": "12345678"
+}
+
+
+Post /products
+{
+  "description": "Laptop",
+  "code": "PROD123",
+  "stock": 50,
+  "price": 1999.99
+}
+
+
+Post /sales 
+{
+  "clientId": 1,
+  "productId": 1,
+  "quantity": 5,
+  "saleDate": "2023-08-15"
+}
+
+
+
 ## Tecnologías utilizadas
 Spring Boot - Framework para la creación de aplicaciones Java.
 Hibernate - Implementación JPA para la persistencia de datos.
