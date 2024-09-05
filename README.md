@@ -2,6 +2,12 @@
 
 Este proyecto es un sistema de facturación basado en una arquitectura de tres capas, con soporte para operaciones CRUD en todas las entidades principales: Client, Product y Sale. Además, se utiliza DTO para la transferencia de datos y está documentado mediante Swagger/OpenAPI.
 
+## Funcionalidad esperada
+
+Al eliminar un cliente se eliminan sus ventas asociadas
+Al eliminar un producto se eliminan sus ventas asociadas.
+Al eliminar una venta solo se elimina la venta.
+
 ## Tecnologías utilizadas
 Spring Boot - Framework para la creación de aplicaciones Java.
 Hibernate - Implementación JPA para la persistencia de datos.
