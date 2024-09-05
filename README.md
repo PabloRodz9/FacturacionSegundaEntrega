@@ -2,27 +2,27 @@
 
 Este proyecto es un sistema de facturación basado en una arquitectura de tres capas, con soporte para operaciones CRUD en todas las entidades principales: Client, Product y Sale. Además, se utiliza DTO para la transferencia de datos y está documentado mediante Swagger/OpenAPI.
 
-Tecnologías utilizadas
+## Tecnologías utilizadas
 Spring Boot - Framework para la creación de aplicaciones Java.
 Hibernate - Implementación JPA para la persistencia de datos.
 Swagger / Springdoc OpenAPI - Para la generación de la documentación de la API.
 H2 Database (o cualquier otra base de datos soportada por JPA).
 Arquitectura
-El sistema está basado en una arquitectura de tres capas:
+### El sistema está basado en una arquitectura de tres capas:
 
 Capa de Controlador: Expone los endpoints RESTful que permiten interactuar con la API. Cada entidad tiene su propio controlador con métodos para obtener todos los registros (GET), obtener por ID (GET), crear (POST) y eliminar (DELETE).
 
-Capa de Servicio: Contiene la lógica de negocio y sirve de intermediario entre los controladores y el repositorio.
+Capa de Servicio: Sirve de intermediario entre los controladores y el repositorio.
 
 Capa de Repositorio: Se encarga de la persistencia y recuperación de datos utilizando JPA/Hibernate.
 
 DTO (Data Transfer Object): Utilizados para manejar la transferencia de datos entre el frontend y la API, optimizando el manejo de la información.
 
-Entidades
-Client (Cliente)
+## Entidades
+### Client (Cliente)
 Representa a un cliente en el sistema.
 
-Atributos:
+### Atributos:
 
 id (int): Identificador único del cliente.
 name (String): Nombre del cliente.
@@ -32,10 +32,11 @@ sales (List<Sale>): Lista de ventas asociadas al cliente.
 Relaciones:
 
 Uno a muchos con Sale.
-Product (Producto)
+
+### Product (Producto)
 Representa un producto disponible para la venta en el sistema.
 
-Atributos:
+### Atributos:
 
 id (int): Identificador único del producto.
 description (String): Descripción del producto.
@@ -46,10 +47,10 @@ sales (List<Sale>): Lista de ventas asociadas al producto.
 Relaciones:
 
 Uno a muchos con Sale.
-Sale (Venta)
+### Sale (Venta)
 Representa una transacción de venta en el sistema.
 
-Atributos:
+### Atributos:
 
 id (int): Identificador único de la venta.
 client (Client): Cliente que realizó la compra.
@@ -59,7 +60,7 @@ saleDate (Date): Fecha en la que se realizó la venta.
 Relaciones:
 
 Muchos a uno con Client y Product.
-Endpoints
+## Endpoints
 Cada entidad cuenta con los siguientes endpoints:
 
 GET /[entidad]: Obtener todos los registros de la entidad.
